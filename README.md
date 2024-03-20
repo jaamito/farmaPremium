@@ -184,5 +184,5 @@ Se han creado 2 tipos de test para esta aplicación:
 
 Para ejecutar los test debes utilizar el comando:
 ```bash
-        docker exec farmapremium-docker bash -c "php artisan test"
-    ```
+    docker exec farmapremium-docker bash -c "php artisan test"
+```
