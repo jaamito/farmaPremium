@@ -1,0 +1,777 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Puntos de Fidelización",
+        "description": "API para gestionar los puntos de fidelización de una tarjeta de cliente.",
+        "contact": {
+            "name": "Ian lopez Zamora",
+            "email": "gm.2012.ian.lopez@gmail.com"
+        },
+        "license": {
+            "name": "",
+            "url": ""
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/canjear": {
+            "post": {
+                "tags": [
+                    "Canjear"
+                ],
+                "summary": "Canjear puntos",
+                "description": "Permite canjear puntos para un cliente en una farmacia.",
+                "operationId": "ff338d615403bf860d568dcb68f40fc2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "idFarmacia",
+                                    "idCliente",
+                                    "puntos"
+                                ],
+                                "properties": {
+                                    "idFarmacia": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "idCliente": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "puntos": {
+                                        "type": "integer",
+                                        "example": "5"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Puntos canjeados correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "properties": {
+                                                "Status": {
+                                                    "type": "integer",
+                                                    "example": 200
+                                                },
+                                                "Mensaje": {
+                                                    "type": "string",
+                                                    "example": "Puntos canjeados correctamente"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "No tienes suficientes puntos para canjear",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "properties": {
+                                                "Status": {
+                                                    "type": "integer",
+                                                    "example": 400
+                                                },
+                                                "Mensaje": {
+                                                    "type": "string",
+                                                    "example": "No tienes suficientes puntos para canjear"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Datos de entrada no válidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 422
+                                        },
+                                        "Mensaje": {
+                                            "properties": {
+                                                "idFarmacia": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "The id farmacia field must be an integer o the id farmacia field is required",
+                                                        "type": "string",
+                                                        "example": "the id farmacia field is required"
+                                                    }
+                                                },
+                                                "idCliente": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "The id farmacia field must be an integer o the id farmacia field is required",
+                                                        "type": "string",
+                                                        "example": "the id cliente field is required"
+                                                    }
+                                                },
+                                                "puntos": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "The id farmacia field must be an integer o the id farmacia field is required",
+                                                        "type": "string",
+                                                        "example": "the puntos field is required"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error de autenticación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 401
+                                        },
+                                        "Mensaje": {
+                                            "description": "ID de farmacia o cliente no existe",
+                                            "type": "string",
+                                            "example": "El id de farmacia no existe"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "Mensaje": {
+                                            "type": "string",
+                                            "example": "Error interno del servidor, contacta con el administrador de la API"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/consultar/puntos-periodo-farmacia": {
+            "get": {
+                "tags": [
+                    "Consultar"
+                ],
+                "summary": "Puntos totales otorgados por la farmacia en un periodo de tiempo",
+                "operationId": "826f09697765f0792200fc98975cf4ec",
+                "parameters": [
+                    {
+                        "name": "idFarmacia",
+                        "in": "query",
+                        "description": "ID Farmacia",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "dateFrom",
+                        "in": "query",
+                        "description": "Fecha inicial en formato YYYY-MM-DD HH:MM:SS",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    },
+                    {
+                        "name": "dateTo",
+                        "in": "query",
+                        "description": "Fecha final en formato YYYY-MM-DD HH:MM:SS",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Saldo consultado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "Id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "Nombre": {
+                                            "type": "string",
+                                            "example": "Farmacia A"
+                                        },
+                                        "Puntos totales otorgados": {
+                                            "type": "integer"
+                                        },
+                                        "Puntos sin canjear": {
+                                            "type": "integer"
+                                        },
+                                        "Fecha inicial": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "Fecha fin": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Datos de entrada no válidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 422
+                                        },
+                                        "Mensaje": {
+                                            "properties": {
+                                                "idFarmacia": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "The id farmacia field must be an integer o the id farmacia field is required",
+                                                        "type": "string",
+                                                        "example": "the id farmacia field is required"
+                                                    }
+                                                },
+                                                "dateFrom": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "The date from field must match the format Y-m-d H:i:s. o the id cliente field is required",
+                                                        "type": "string",
+                                                        "example": "The date from field must match the format Y-m-d H:i:s."
+                                                    }
+                                                },
+                                                "dateTo": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "The date to field must match the format Y-m-d H:i:s. o the id puntos field is required",
+                                                        "type": "string",
+                                                        "example": "The date to field must match the format Y-m-d H:i:s."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error de autenticación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 401
+                                        },
+                                        "Mensaje": {
+                                            "description": "ID de farmacia no existe",
+                                            "type": "string",
+                                            "example": "El id de farmacia no existe"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "Mensaje": {
+                                            "type": "string",
+                                            "example": "Error interno del servidor, contacta con el administrador de la API"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/consultar/puntos-farmacia-cliente": {
+            "get": {
+                "tags": [
+                    "Consultar"
+                ],
+                "summary": "Puntos totales otorgados por la farmacia a un cliente",
+                "operationId": "66280650f6a1125fd59ee64d147d0098",
+                "parameters": [
+                    {
+                        "name": "idCliente",
+                        "in": "query",
+                        "description": "ID del cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "idFarmacia",
+                        "in": "query",
+                        "description": "ID de la farmacia",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Puntos consultados correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "Id farmacia": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "Nombre farmacia": {
+                                            "type": "string",
+                                            "example": "Farmacia A"
+                                        },
+                                        "Id cliente": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "Nombre cliente": {
+                                            "type": "string",
+                                            "example": "Cliente 1"
+                                        },
+                                        "Puntos totales otorgados por la farmacia": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error de autenticación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 401
+                                        },
+                                        "Mensaje": {
+                                            "description": "ID de farmacia no existe o el ID cliente no existe",
+                                            "type": "string",
+                                            "example": "El id de farmacia no existe"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Datos de entrada no válidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 422
+                                        },
+                                        "Mensaje": {
+                                            "properties": {
+                                                "idCliente": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "The id cliente field must be an integer o the id cliente field is required",
+                                                        "type": "string",
+                                                        "example": "the id cliente field is required"
+                                                    }
+                                                },
+                                                "idFarmacia": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "The id farmacia field must be an integer o the id farmacia field is required",
+                                                        "type": "string",
+                                                        "example": "the id farmacia field is required"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "Mensaje": {
+                                            "type": "string",
+                                            "example": "Error interno del servidor, contacta con el administrador de la API"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/consultar/saldo-cliente": {
+            "get": {
+                "tags": [
+                    "Consultar"
+                ],
+                "summary": "Consultar saldo del cliente",
+                "operationId": "d3b9a824e4a101752775bd58e63d3a93",
+                "parameters": [
+                    {
+                        "name": "idCliente",
+                        "in": "query",
+                        "description": "ID del cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Saldo consultado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "Id cliente": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "Nombre cliente": {
+                                            "type": "string",
+                                            "example": "Cliente 1"
+                                        },
+                                        "Saldo actual": {
+                                            "type": "integer",
+                                            "example": 12
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error de autenticación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 401
+                                        },
+                                        "Mensaje": {
+                                            "description": "ID de cliente no existe",
+                                            "type": "string",
+                                            "example": "El id de cliente no existe"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Datos de entrada no válidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 422
+                                        },
+                                        "Mensaje": {
+                                            "properties": {
+                                                "idCliente": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "The id cliente field must be an integer o the id cliente field is required",
+                                                        "type": "string",
+                                                        "example": "the id cliente field is required"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "Mensaje": {
+                                            "type": "string",
+                                            "example": "Error interno del servidor, contacta con el administrador de la API"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/acumular": {
+            "post": {
+                "tags": [
+                    "Acumular"
+                ],
+                "summary": "Acumular puntos",
+                "description": "Permite acumular puntos para un cliente en una farmacia.",
+                "operationId": "208e07315db8578c18aeb0c09eef8bf2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "idFarmacia",
+                                    "idCliente",
+                                    "puntos"
+                                ],
+                                "properties": {
+                                    "idFarmacia": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "idCliente": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "puntos": {
+                                        "type": "integer",
+                                        "example": "10"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Puntos acumulados correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "properties": {
+                                                "Status": {
+                                                    "type": "integer",
+                                                    "example": 200
+                                                },
+                                                "Mensaje": {
+                                                    "type": "string",
+                                                    "example": "Puntos acumulados correctamente"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Datos de entrada no válidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 422
+                                        },
+                                        "Mensaje": {
+                                            "properties": {
+                                                "idFarmacia": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "The id farmacia field must be an integer o the id farmacia field is required",
+                                                        "type": "string",
+                                                        "example": "the id farmacia field is required"
+                                                    }
+                                                },
+                                                "idCliente": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "The id cliente field must be an integer o the id cliente field is required",
+                                                        "type": "string",
+                                                        "example": "the id cliente field is required"
+                                                    }
+                                                },
+                                                "puntos": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "The id puntos field must be an integer o the id puntos field is required",
+                                                        "type": "string",
+                                                        "example": "the puntos field is required"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error de autenticación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 401
+                                        },
+                                        "Mensaje": {
+                                            "description": "ID de farmacia o cliente no existe",
+                                            "type": "string",
+                                            "example": "El id de farmacia no existe"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "Mensaje": {
+                                            "type": "string",
+                                            "example": "Error interno del servidor, contacta con el administrador de la API"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
