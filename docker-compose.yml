@@ -1,0 +1,24 @@
+services:
+
+  laravel-docker:
+    container_name: farmapremium-docker
+    build: .
+    volumes:
+      - ./laravel-app:/var/www/html
+    ports:
+      - 9000:80
+  
+  mysql_db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: farmapremium
+    ports:
+    - 3307:3307
+  
+  phpmyadmin:
+    image: phpmyadmin:latest
+    ports:
+      - 9001:80
+    environment:
+      - PMA_ARBITRARY=1
