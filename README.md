@@ -181,3 +181,8 @@ Para consultar la documentación de la API puedes acceder a [http://localhost:90
 Se han creado 2 tipos de test para esta aplicación:
  1. Test simple que recorre todas las rutas de la API probando los diferentes tipos de código devueltos por la API (200,401,500...)
  2. Test mas complejo añadiendo mocks para simular objetos o clases específicas durante la ejecución de pruebas unitarias y hay 3 tests, uno por cada ruta y se encuentran en la ruta **FarmaPremium/laravel-app/test/Feature**
+
+Para ejecutar los test debes utilizar el comando:
+```bash
+        docker exec farmapremium-docker bash -c "php artisan test"
+    ```
