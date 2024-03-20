@@ -9,6 +9,15 @@ Desarrollar una RestFul API que permita a las farmacias y clientes gestionar los
   - Consultar puntos totales otorgados a un cliente por una farmacia.
   - Consultar el saldo total de puntos de un cliente.
 
+## Descarga de la API
+
+Para descargar el proyecto tenemos que tener git y ejecutar los siguientes comandos:
+
+```bash
+git clone https://github.com/jaamito/farmaPremium.git
+cd farmaPremium
+```
+
 ## Instalación y ejecución DOCKER
 
 Una vez descargado el fichero FarmaPremium.zip y extraido accedemos dentro de la carpeta y deberemos seguir los siguientes pasos:
