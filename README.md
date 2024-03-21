@@ -20,19 +20,19 @@ cd farmaPremium
 
 ## Instalación y ejecución DOCKER
 
-Una vez descargado el fichero FarmaPremium.zip y extraido accedemos dentro de la carpeta y deberemos seguir los siguientes pasos:
+Una vez descargado el fichero FarmaPremium.zip y extraído accedemos dentro de la carpeta y deberemos seguir los siguientes pasos:
 
 1. Abrimos la terminal en el directorio FarmaPremium y ejecutamos el siguiente comando para construir la Imagen de nuestro archivo **docker-compose.yml**:
 
 ```bash
 docker-compose build --no-cache --force-rm
 ```
-2. En la misma terminal ejecutamos el siguiente comando para ejecuta el contenedor en docker:
+2. En la misma terminal ejecutamos el siguiente comando para ejecutar el contenedor en docker:
 
 ```bash
 docker-compose up -d
 ```
-Una vez montada la Imagen y con los contenedores tendremos 3 imagenes:
+Una vez montada la Imagen y con los contenedores tendremos 3 imágenes:
 
 - **Laravel:** [http://localhost:9000/](http://localhost:9000/)
 - **MySql:** [http://localhost:3307/](http://localhost:3307/)
@@ -180,7 +180,7 @@ Para consultar la documentación de la API puedes acceder a [http://localhost:90
 ## Test con PHPUnit
 Se han creado 2 tipos de test para esta aplicación:
  1. Test simple que recorre todas las rutas de la API probando los diferentes tipos de código devueltos por la API (200,401,500...)
- 2. Test mas complejo añadiendo mocks para simular objetos o clases específicas durante la ejecución de pruebas unitarias y hay 3 tests, uno por cada ruta y se encuentran en la ruta **FarmaPremium/laravel-app/test/Feature**
+ 2. Test más complejo añadiendo mocks para simular objetos o clases específicas durante la ejecución de pruebas unitarias y hay 3 tests, uno por cada ruta y se encuentran en la ruta **FarmaPremium/laravel-app/test/Feature**
 
 Para ejecutar los test debes utilizar el comando:
 ```bash
